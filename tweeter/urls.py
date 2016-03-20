@@ -20,6 +20,6 @@ admin.autodiscover()
 
 urlpatterns = patterns(' ',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^user/(w+)/$', Profile.as_view()),
+    url(r'^user/(\w+)/$', Profile.as_view()),
     url(r'^$', Index.as_view()),
 )
