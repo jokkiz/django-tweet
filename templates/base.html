@@ -7,9 +7,18 @@
     <title>Title</title>
 </head>
 <body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <a class="navbar-brand">Мои твиты</a>
+        <p class="navbar-text navbar-right">Страница профиля пользователя</p>
+    </nav>
+    <div class="container">
     {% block content %}
-    <h1 class="text-info">Привет, {{name}}</h1>
     {% endblock %}
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <p class="navbar-text navbar-right">Footer</p>
+    </nav>
+    <script src="{% static 'js/jquery-2.2.2.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 </body>
 </html>
