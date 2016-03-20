@@ -1,0 +1,15 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" media="screen" href="{%static 'bootstrap/css/bootstrap.css'%}">
+    <title>Title</title>
+</head>
+<body>
+    {% block content %}
+    <h1 class="text-info">Привет, {{name}}</h1>
+    {% endblock %}
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
