@@ -1,10 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row clearfix">
-    <div class="col-md-12">
+    <div class="col-md-12 column">
+        <form class="form-inline" method="post" action="post/">{% csrf_token %}
+            <div class="col-md-8 col-md-offset-2 fieldWrapper">
+                <div class="form-group">
+                    {{ form.text.error }}
+                    {{ form.text }}
+                </div>
+            </div>
+            {{form.country.as_hidden}}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Твитнуть
+                </button>
+            </div>
+        </form>
+    </div>
+    <h3>Предыдущие твиты</h3>
+    <div class="col-md-12 column">
         {% for tweet in tweets%}
         <div class="well">
             <span>{{tweet.text}}</span>
+            <span class="badge">{{tweet.created_date}}</span>
         </div>
         {% endfor %}
     </div>
