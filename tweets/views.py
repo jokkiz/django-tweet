@@ -32,7 +32,7 @@ class Profile(View):
 class PostTweet(View):
 #Tweet Post form available on page /user/<username> URL
     def post(self, request, username):
-        form = TweetForm(self.request.POST)
+        form = TweetForm(request.POST)
         if form.is_valid():
             user = User.objects.get(username=username)
             tweet = Tweet(text=form.cleaned_data["text"],
