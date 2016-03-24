@@ -6,8 +6,9 @@ class Tweet(models.Model):
     user = models.ForeignKey(User)
     text = models.CharField(max_length=160)
     created_date = models.DateTimeField(auto_now_add=True)
-    country = models.CharField(max_length=30)
+    country = models.CharField(max_length=30, null=True )
     is_active = models.BooleanField(default=True)
+    TEXT_FIELD = "text"
 
     def __unicode__(self):
         return self.text

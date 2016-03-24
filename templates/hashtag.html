@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row clearfix">
+    <div class="col-md-12 column">
+        {% for tweet in tweets.all %}
+        <div class="well">
+            <h3>
+                {{ tweet.text }}<span class="label label-default">{{ tweet.user.username }} -  {{tweet.created_date}}</span>
+            </h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

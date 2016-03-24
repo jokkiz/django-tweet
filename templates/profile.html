@@ -9,6 +9,7 @@
                     {{ form.text }}
                 </div>
             </div>
+            {{for.country.error}}
             {{form.country.as_hidden}}
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">
@@ -17,7 +18,9 @@
             </div>
         </form>
     </div>
-    <h3>Предыдущие твиты</h3>
+    <div class="page-header">
+        <h3></h3>
+    </div>
     <div class="col-md-12 column">
         {% for tweet in tweets%}
         <div class="well">

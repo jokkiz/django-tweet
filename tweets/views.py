@@ -21,7 +21,7 @@ class Profile(View):
     def get(self, request, username):
         params = dict()
         user = User.objects.get(username=username)
-        tweets = Tweet.objects.filter(user=user)
+        tweets = Tweet.objects.filter(user=user).order_by('-created_date')
         form = TweetForm()
         params["tweets"] = tweets
         params["user"] = user
@@ -32,7 +32,7 @@ class Profile(View):
 class PostTweet(View):
 #Tweet Post form available on page /user/<username> URL
     def post(self, request, username):
-        form = TweetForm(request.POST)
+        form = TweetForm(self.request.POST)
         if form.is_valid():
             user = User.objects.get(username=username)
             tweet = Tweet(text=form.cleaned_data["text"],
@@ -43,6 +43,14 @@ class PostTweet(View):
             words = form.cleaned_data["text"].split(" ")
             for word in words:
                 if word[0] == "#":
-                    HashTag, created = HashTag.objects.get_or_create(name=word[1:])
-                    HashTag.tweet.add(tweet)
+                    hashTag, created = HashTag.objects.get_or_create(name=word[1:])
+                    hashTag.tweet.add(tweet)
         return HttpResponseRedirect("/user/" + username)
+
+
+class HashTagCloud(View):
+    def get(self, request, hashtag):
+        params = {}
+        hashtag = HashTag.objects.get(name=hashtag)
+        params["tweets"] = hashtag.tweet
+        return render(request, 'hashtag.html', params)
