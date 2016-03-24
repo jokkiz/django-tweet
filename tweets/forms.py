@@ -9,3 +9,5 @@ class TweetForm(forms.Form):
                            , max_length=160)
     country = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    def __unicode__(self):
+        return self.text

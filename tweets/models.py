@@ -11,7 +11,7 @@ class Tweet(models.Model):
     TEXT_FIELD = "text"
 
     def __unicode__(self):
-        return self.text
+        return "tweet: {0}".format(self.text)
 
 
 class HashTag(models.Model):
@@ -19,4 +19,4 @@ class HashTag(models.Model):
     tweet = models.ManyToManyField(Tweet)
 
     def __unicode__(self):
-        return self.name
+        return "hash: {0}".format(self.name)
