@@ -1,33 +1,39 @@
 {% extends "base.html" %}
+{% block navbar%}
+<p class="navbar-text navbar-right">
+    <span class="glyphicon glyphicon-user"></span>   {{profile.username}}
+</p>
+{% endblock %}
 {% block content %}
 <div class="row clearfix">
     <div class="col-md-12 column">
-        <form class="form-inline" method="post" action="post/">{% csrf_token %}
-            <div class="col-md-8 col-md-offset-2 fieldWrapper">
+        <form method="post" action="post/">{% csrf_token %}
+            <div class="col-md-8 col-md-offset-2">
                 <div class="form-group">
+                    <label class="sr-only" for="tweet">Текст твита</label>
                     {{ form.text.error }}
                     {{ form.text }}
                 </div>
-            </div>
-            {{for.country.error}}
-            {{form.country.as_hidden}}
-            <div class="form-group">
+                <div class="form-group">
+                    <label class="sr-only" for="country">Страна</label>
+                    {{for.country.error}}
+                    {{form.country.as_hidden}}
+                </div>
                 <button type="submit" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Твитнуть
+                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send tweet
                 </button>
             </div>
         </form>
     </div>
-    <div class="page-header">
-        <h3></h3>
+</div>
+<hr/>
+<p><h2 style="padding-left: 50px;padding-right: 50px">Ваши последние твиты</h2></p>
+<div class="col-md-12 column">
+    {% for tweet in tweets%}
+    <div class="well">
+        <span>{{tweet.text}}</span>
+        <span class="badge">{{tweet.created_date}}</span>
     </div>
-    <div class="col-md-12 column">
-        {% for tweet in tweets%}
-        <div class="well">
-            <span>{{tweet.text}}</span>
-            <span class="badge">{{tweet.created_date}}</span>
-        </div>
-        {% endfor %}
-    </div>
+    {% endfor %}
 </div>
 {% endblock%}

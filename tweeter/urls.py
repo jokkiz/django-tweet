@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, patterns, include
 from django.contrib import admin
-from tweets.views import Index, Profile, PostTweet, HashTagCloud
+from tweets.views import Index, Profile, PostTweet, HashTagCloud, Search
 admin.autodiscover()
 
 urlpatterns = patterns(' ',
@@ -24,4 +24,6 @@ urlpatterns = patterns(' ',
     url(r'^user/(\w+)/post/$', PostTweet.as_view()),
     url(r'^hashTag/(\w+)/$', HashTagCloud.as_view()),
     url(r'^$', Index.as_view()),
+    url(r'^search/$', Search.as_view()),
+    url(r'^search/post$', Search.as_view()),
 )
