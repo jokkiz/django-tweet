@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url, patterns, include
 from django.contrib import admin
 from tweets.views import Index, Profile, PostTweet, HashTagCloud, Search
+from user_profile.views import UserRedirect, MostFollowedUsers
 admin.autodiscover()
 
-urlpatterns = patterns(' ',
+urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/(\w+)/$', Profile.as_view()),
     url(r'^user/(\w+)/post/$', PostTweet.as_view()),
@@ -26,4 +27,8 @@ urlpatterns = patterns(' ',
     url(r'^$', Index.as_view()),
     url(r'^search/$', Search.as_view()),
     url(r'^search/post$', Search.as_view()),
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout'),
+    url(r'^profile/$', UserRedirect.as_view()),
+    url(r'^mostFollowed/$', MostFollowedUsers.as_view(),)
 )

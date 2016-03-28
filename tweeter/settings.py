@@ -25,9 +25,7 @@ SECRET_KEY = '1gb@d9g*dkxnm0-5f**p-t-+)b$1)m+ytpo&&2rdb^595_@3pu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = ["127.0.0.1"]
-
 
 # Application definition
 
@@ -129,6 +127,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (
     BASE_DIR + 'static',
 )
+
+LOGIN_REDIRECT_URL = '/profile'
+
+LOGIN_URL = 'django.contrib.auth.views.login'

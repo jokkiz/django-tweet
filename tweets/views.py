@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import View
 from tweets.models import Tweet, HashTag
-from user_profile.models import User
+from user_profile.models import User, UserFollower
 from tweets.forms import TweetForm, SearchForm
 from django.template import Context
 from django.template.loader import render_to_string
 import json
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class Index(View):
 
@@ -19,17 +21,41 @@ class Index(View):
         return HttpResponse("Запрос отправлен")
 
 
-class Profile(View):
+class Profile(LoginRequiredMixin, View):
 
     def get(self, request, username):
         params = dict()
-        user = User.objects.get(username=username)
-        tweets = Tweet.objects.filter(user=user).order_by('-created_date')
-        form = TweetForm()
+        userProfile = User.objects.get(username=username)
+        try:
+            userFollower = UserFollower.objects.get(user=userProfile)
+            if userFollower.followers.filter(username=request.user.username).exists():
+                params["following"] = True
+            else:
+                params["following"] = False
+        except:
+            userFollower = []
+
+        form = TweetForm(initial={'country': 'Global'})
+        search_form = SearchForm()
+        tweets = Tweet.objects.filter(user=userProfile).order_by('-created_date')
+
         params["tweets"] = tweets
-        params["user"] = user
+        params["profile"] = userProfile
         params["form"] = form
+        params["search"] = search_form
         return render(request, 'profile.html', params)
+
+    def post(self, request, username):
+        follow = request.POST['follow']
+        user = User.objects.get(username=request.user.username)
+        userProfile = User.objects.get(username=username)
+        userFollower,status = UserFollower.objects.get_or_create(user=userProfile)
+        userFollower.count +=1
+        if follow == True:
+            userFollower.followers.add(user)
+        else:
+            userFollower.followers.remove(user)
+        return HttpResponse(json.dumps(""), content_type='application/json')
 
 
 class PostTweet(View):
