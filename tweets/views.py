@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import permission_required, login_required
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger
 from tweeter import settings as s
 
 
@@ -45,7 +45,7 @@ class Profile(LoginRequiredMixin, View):
         page = request.GET.get('page')
         try:
             tweets = paginator.page(page)
-        except:
+        except PageNotAnInteger:
             tweets = paginator.page(paginator.num_pages)
 
         params["tweets"] = tweets
@@ -84,7 +84,7 @@ class PostTweet(View):
                 if word[0] == "#":
                     hashTag, created = HashTag.objects.get_or_create(name=word[1:])
                     hashTag.tweet.add(tweet)
-        return HttpResponseRedirect("/user/" + username)
+        return HttpResponseRedirect("/user/" + username + "/?page=1")
 
 
 class HashTagCloud(View):

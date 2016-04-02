@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from tweeter import local_settings as s
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tweeter.settings")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,11 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1gb@d9g*dkxnm0-5f**p-t-+)b$1)m+ytpo&&2rdb^595_@3pu'
-
+SECRET_KEY = s.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ["127.0.0.1"]
 
 # Application definition
@@ -138,4 +140,11 @@ LOGIN_URL = 'django.contrib.auth.views.login'
 
 TWEET_PER_PAGE = 5
 
-SITE_HOST = ''
+SITE_HOST = '127.0.0.1:8000'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'r.dulkarnaev@mail.ru'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = '465'
+EMAIL_HOST_USER = s.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = s.EMAIL_HOST_PASSWORD

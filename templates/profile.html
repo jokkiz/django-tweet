@@ -55,10 +55,11 @@
     <nav>
         <ul class="pager">
             {% if tweets.has_previous %}
-            <li><a href="?page={{tweets.previous_page_number}}">Предыдущая</a></li>
+            <li><a href="?page={{tweets.previous_page_number}}"><span class="glyphicon glyphicon-hand-left"></span> Предыдущая</a></li>
             {% endif %}
+            <span>Страница {{ tweets.number }} из {{ tweets.paginator.num_pages }}</span>
             {% if tweets.has_next %}
-            <li><a href="?page={{tweets.next_page_number}}">Следующая</a></li>
+            <li><a href="?page={{tweets.next_page_number}}">Следующая <span class="glyphicon glyphicon-hand-right"></span></a></li>
             {% endif %}
         </ul>
     </nav>
