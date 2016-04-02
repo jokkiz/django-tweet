@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block navbar %}
-<p class="navbar-text navbar-right" style="padding-right: 30px;">
+<p class="navbar-text navbar-right" style="padding-right: 60px;">
     <span class="glyphicon glyphicon-user"> </span> Профиль {{profile.username}}
     {% if profile.username != user.username %}
     <span class="btn btn-xs btn-default follow-btn"
@@ -52,6 +52,18 @@
         <span class="badge">{{tweet.created_date}}</span>
     </div>
     {% endfor %}
+    <nav>
+        <ul class="pager">
+            {% if tweets.has_previous %}
+            <li><a href="?page={{tweets.previous_page_number}}">Предыдущая</a></li>
+            {% endif %}
+            {% if tweets.has_next %}
+            <li><a href="?page={{tweets.next_page_number}}">Следующая</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
 </div>
 {% endblock%}
 {% block js %}

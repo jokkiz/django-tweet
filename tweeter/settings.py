@@ -135,3 +135,7 @@ STATICFILES_DIRS = (
 LOGIN_REDIRECT_URL = '/profile'
 
 LOGIN_URL = 'django.contrib.auth.views.login'
+
+TWEET_PER_PAGE = 5
+
+SITE_HOST = ''

@@ -8,6 +8,9 @@ from django.template import Context
 from django.template.loader import render_to_string
 import json
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import permission_required, login_required
+from django.core.paginator import Paginator
+from tweeter import settings as s
 
 
 class Index(View):
@@ -33,11 +36,17 @@ class Profile(LoginRequiredMixin, View):
             else:
                 params["following"] = False
         except:
-            userFollower = []
+            UserFollower = []
 
         form = TweetForm(initial={'country': 'Global'})
         search_form = SearchForm()
         tweets = Tweet.objects.filter(user=userProfile).order_by('-created_date')
+        paginator = Paginator(tweets, s.TWEET_PER_PAGE)
+        page = request.GET.get('page')
+        try:
+            tweets = paginator.page(page)
+        except:
+            tweets = paginator.page(paginator.num_pages)
 
         params["tweets"] = tweets
         params["profile"] = userProfile
@@ -59,7 +68,8 @@ class Profile(LoginRequiredMixin, View):
 
 
 class PostTweet(View):
-#Tweet Post form available on page /user/<username> URL
+    #Tweet Post form available on page /user/<username> URL
+   # @permission_required('tweets.add_tweet', login_url='/login/')
     def post(self, request, username):
         form = TweetForm(self.request.POST)
         if form.is_valid():
